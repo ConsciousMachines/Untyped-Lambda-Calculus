@@ -1,5 +1,5 @@
 # Untyped-Lambda-Calculus
-Implemented all the stuff up to page 78. The rest of the book is just parsing the new syntax, the core is the same. 
+My code-along while reading "Functional Programming Through Lambda Calculus" by Greg Michaelson. Implemented all the stuff up to page 78. The rest of the book is just parsing the new syntax, the core is the same. 
 
 Chapter 4 was the best explanation of the Y-combinator I have ever read. 
 
