@@ -1,0 +1,67 @@
+﻿
+
+; chapter 2
+
+identity = \x.x
+
+self_apply = \s.(s s)
+
+apply = \func.\arg.(func arg)
+
+select_first = \fst.\snd.fst 
+
+select_second = \fst.\snd.snd
+
+make_pair = \fst.\snd.\f.((f fst) snd)
+
+
+; chapter 3
+
+cond = \a.\b.\c.((c a) b)
+
+tru = select_first 
+
+fls = select_second 
+
+not = \x.((x fls) tru)
+
+and = \x.\y.((x y) fls)
+
+or = \x.\y.((x tru) y)
+
+zero = identity 
+
+succ = \n.\s.((s fls) n)
+
+one = (succ zero)
+two = (succ one)
+three = (succ two)
+four = (succ three)
+five = (succ four)
+six = (succ five)
+seven = (succ six)
+eight = (succ seven)
+nine = (succ eight)
+ten = (succ nine)
+
+iszero = \n.(n select_first)
+
+pred = \n.(((iszero n) zero) (n select_second))
+
+
+; chapter 4
+
+Y = \f.(\s.(f (s s)) \s.(f (s s)))
+
+mult1 = \f.\x.\y.(((iszero y) zero) ((add x) ((f x) (pred y))))
+
+mult = (Y mult1)
+
+add1 = \f.\x.\y.(((iszero y) x) ((f (succ x)) (pred y)))
+
+add = (Y add1)
+
+; stopped on page 78
+
+test = ((add ten) ten)
+
