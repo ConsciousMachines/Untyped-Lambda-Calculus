@@ -8,26 +8,26 @@ Implementing LC without the formal semantics was interesting as I discovered a b
 Here are the semantics I implemented: 
 # Substitution:
 for x a name, if x =/= y : 
-## [subs y]x -> x  
+### [subs y]x -> x  
 if x = y : 
-## [subs y]x -> y    
-## [subs y](a b) -> ([subs y]a [subs y]b)
+### [subs y]x -> y    
+### [subs y](a b) -> ([subs y]a [subs y]b)
 for f a name and e expression, if f = y : 
-## [subs y]\f.e -> \f.e     
+### [subs y]\f.e -> \f.e     
 if f =/= y : 
-## [subs y]\f.e -> \f.[subs y]e     
+### [subs y]\f.e -> \f.[subs y]e     
 
 
 # Evaluation:
 if x is a name : 
-## x => x 
+### x => x 
 if x is in the function table : 
-## x => fn_table[x] 
-## \f.e => \f.e
+### x => fn_table[x] 
+### \f.e => \f.e
 assuming f has been alpha-converted to avoid free variable capture : 
-#### (\f.e x) => [subs x]e 
+### (\f.e x) => [subs x]e 
 if f is not a function : 
-#### (f e) => (f eval(e)) 
+### (f e) => (f eval(e)) 
 
 
 There is also an optimization. The book mentioned how normal order evaluation repeats the same computation each time since the argument expression is never evaluated. Well, first of all I made all the expressions readonly (immutable) so we can pass one object around wherever copies of it are needed. Additionally I added a tag "is_evaluated" and a pointer to its evaluated counter part. Suddenly after 4 lines of code, you don't need to recompute anything twice! Each lambda expression has a pointer to its evaluated version, and a tag that tells you to look at it rather than compute it again. This made my (((Y add1) ten) ten) cut down from  over 71_000 to 1_383 beta reductions.
